@@ -1,4 +1,4 @@
-package ch.heigvd.commands.img;
+package ch.heigvd.ios.img;
 
 public class Pixel {
     private byte blue;

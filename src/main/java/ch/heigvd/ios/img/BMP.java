@@ -75,9 +75,34 @@ public class BMP {
         return ByteBuffer.wrap(header, 28, 2).order(ByteOrder.LITTLE_ENDIAN).getShort();
     }
 
-    public void setImageBMP(byte[] imageBMP) {
-        this.imageBMP = imageBMP;
+    public Pixel[][] getPixels() {
+        int width = getWidth();
+        int height = getHeight();
+        Pixel[][] pixels = new Pixel[height][width];
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                int index = (i * width + j) * 3;
+                pixels[i][j] = new Pixel(imageBMP[index], imageBMP[index + 1], imageBMP[index + 2]);
+            }
+        }
+        return pixels;
     }
 
+    public void setImageBMP(Pixel[][] imagePixels) {
+        int width = getWidth();
+        int height = getHeight();
+        if (imagePixels.length != height || imagePixels[0].length != width) {
+            throw new IllegalArgumentException("Dimensions des pixels incorrectes.");
+        }
 
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                int index = (i * width + j) * 3;
+                byte[] pixelData = imagePixels[i][j].getPixel();
+                imageBMP[index] = pixelData[0];
+                imageBMP[index + 1] = pixelData[1];
+                imageBMP[index + 2] = pixelData[2];
+            }
+        }
+    }
 }

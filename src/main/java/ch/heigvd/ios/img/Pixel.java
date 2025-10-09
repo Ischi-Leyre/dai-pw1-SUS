@@ -1,47 +1,46 @@
 package ch.heigvd.ios.img;
 
 public class Pixel {
-    private byte blue;
-    private byte green;
-    private byte red;
+    private byte[] data;
 
-    public Pixel(byte blue, byte green, byte red) {
-        this.blue = blue;
-        this.green = green;
-        this.red = red;
+    public Pixel(int blue, int green, int red) {
+        this.data = new byte[] {(byte) blue, (byte) green, (byte) red};
     }
 
-    public byte getRed() {
-        return red;
+    public Pixel(byte[] pixelData) {
+        if (pixelData.length == 3) this.data = pixelData;
+        else System.err.println("Pixel data length incorrect.");
     }
 
-    public byte getGreen() {
-        return green;
+    public int getRed() {
+        return (data[2] >> 16) & 0xff;
     }
 
-    public byte getBlue() {
-        return blue;
+    public int getGreen() {
+        return (data[1] >> 8) & 0xff;
+    }
+
+    public int getBlue() {
+        return data[0] & 0xff;
     }
 
     public byte[] getPixel() {
-        return new byte[]{red, green, blue};
+        return data;
     }
 
-    public void setRed(byte red) {
-        this.red = red;
+    public void setRed(int red) {
+        this.data[2] = (byte) red;
     }
 
-    public void setGreen(byte green) {
-        this.green = green;
+    public void setGreen(int green) {
+        this.data[1] = (byte) green;
     }
 
-    public void setBlue(byte blue) {
-        this.blue = blue;
+    public void setBlue(int blue) {
+        this.data[0] = (byte) blue;
     }
 
-    public void setPixel(byte blue, byte green, byte red) {
-        setBlue(blue);
-        setGreen(green);
-        setRed(red);
+    public void setPixel(int blue, int green, int red) {
+        this.data = new byte[] {(byte) blue, (byte) green, (byte) red};
     }
 }

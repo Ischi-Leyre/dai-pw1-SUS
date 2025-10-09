@@ -28,12 +28,13 @@ public class BMP {
             int dataOffset = getOffset();
 
             imageBMP = new byte[width * height * 3];
-            System.arraycopy(header, 0, imageBMP, 0, header.length);
-            bis.readNBytes(imageBMP, header.length, width * height * 3 + dataOffset - header.length);
+            bis.skip(dataOffset - header.length);
 
+            if (bis.read(imageBMP) != imageBMP.length)
+                throw new IOException("Impossible de lire les données d'image.");
 
         } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error read: " + e.getMessage());
         }
     }
 

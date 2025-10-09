@@ -38,7 +38,18 @@ public class BMP {
         }
     }
 
+    public void write(String filename) {
+        try (OutputStream fos = new FileOutputStream(filename);
+             BufferedOutputStream bos = new BufferedOutputStream(fos)) {
+            bos.write(header);
+            if (getOffset() > header.length)
+                bos.write(new byte[getOffset() - header.length]);
 
+            bos.write(imageBMP);
+        } catch (Exception e) {
+            System.err.println("Error write: " + e.getMessage());
+        }
+    }
 
     public byte[] getHeader() {
         return header;

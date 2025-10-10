@@ -5,8 +5,7 @@ public class Pixel {
 
     public Pixel(int blue, int green, int red) {
         try {
-            if(blue < 0 || green < 0 || red < 0
-            || blue > 0xff || green > 0xff || red > 0xff) {
+            if(blue < 0 || green < 0 || red < 0 || blue > 0xff || green > 0xff || red > 0xff) {
                 throw new NumberFormatException("Error: color components must be in range [0x00-0xFF]");
             }
 
@@ -30,23 +29,26 @@ public class Pixel {
 
             // Decode hexadecimal values and clamp them to [0x00, 0xFF]
             int blue = Integer.decode(colors[0]);
-            if (blue < 0 || blue > 0xff )
+            if (blue < 0 || blue > 0xff ) {
                 throw new NumberFormatException("Error blue : ");
+            }
 
             int green = Integer.decode(colors[1]);
-            if (green < 0 || green > 0xff )
+            if (green < 0 || green > 0xff ) {
                 throw new NumberFormatException("Error green : ");
+            }
 
             int red = Integer.decode(colors[2]);
-            if (red < 0 || red > 0xff )
+            if (red < 0 || red > 0xff ) {
                 throw new NumberFormatException("Error red: ");
+            }
 
             // Create pixel
             this.data = new byte[] {(byte) blue, (byte) green, (byte) red};
         } catch (NumberFormatException e) {
             System.err.println(e.getMessage() + "color must be in format B,G,R.\n" +
-                            "\twith hexadecimal values [0x00-0xFF]\n" +
-                            "\tdecimal values [0-255]");
+                    "\twith hexadecimal values [0x00-0xFF]\n" +
+                    "\tdecimal values [0-255]");
             System.err.println("Program aborted.");
             System.exit(1);
         } catch (Error e) {
@@ -72,30 +74,33 @@ public class Pixel {
     }
 
     public void setRed(int red) {
-        if (red >= 0 && red <= 0xff)
+        if (red >= 0 && red <= 0xff) {
             this.data[2] = (byte) red;
-        else
+        } else {
             System.err.println("Error: red component must be in range [0x00-0xFF], not set");
+        }
     }
 
     public void setGreen(int green) {
-        if (green >= 0 && green <= 0xff)
+        if (green >= 0 && green <= 0xff) {
             this.data[1] = (byte) green;
-        else
+        } else {
             System.err.println("Error: green component must be in range [0x00-0xFF], not set");
+        }
     }
 
     public void setBlue(int blue) {
-        if (blue >= 0 && blue <= 0xff)
+        if (blue >= 0 && blue <= 0xff) {
             this.data[0] = (byte) blue;
-        else
+        } else {
             System.err.println("Error: blue component must be in range [0x00-0xFF], not set");
+        }
     }
 
     public void setPixel(int blue, int green, int red) {
-       this.setBlue(blue);
-       this.setGreen(green);
-       this.setRed(red);
+        this.setBlue(blue);
+        this.setGreen(green);
+        this.setRed(red);
     }
 
     public void setPixel(Pixel pixel) {

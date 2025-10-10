@@ -65,6 +65,16 @@ public class Pixel {
     }
 
     public void setPixel(int blue, int green, int red) {
-        this.data = new byte[] {(byte) blue, (byte) green, (byte) red};
+       this.setBlue(blue);
+       this.setGreen(green);
+       this.setRed(red);
+    }
+
+    public void setPixel(Pixel pixel) {
+        this.data = pixel.getPixel();
+    }
+
+    public boolean equals(Pixel pixel) {
+        return pixel.getRed() == this.getRed() && pixel.getGreen() == this.getGreen() && pixel.getBlue() == this.getBlue();
     }
 }

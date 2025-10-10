@@ -105,4 +105,16 @@ public class BMP {
             }
         }
     }
+
+    public void changeColor(Pixel targetColor, Pixel newColor) {
+        int width = getWidth();
+        int height = getHeight();
+        Pixel[][] pixels = getPixels();
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (pixels[i][j].equals(targetColor))
+                    pixels[i][j].setPixel(newColor);
+            }
+        }
+    }
 }

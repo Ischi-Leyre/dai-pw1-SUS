@@ -4,7 +4,20 @@ public class Pixel {
     private byte[] data;
 
     public Pixel(int blue, int green, int red) {
-        this.data = new byte[] {(byte) blue, (byte) green, (byte) red};
+        try {
+            if(blue < 0 || green < 0 || red < 0
+            || blue > 0xff || green > 0xff || red > 0xff) {
+                throw new NumberFormatException("Error: color components must be in range [0x00-0xFF]");
+            }
+
+            this.data = new byte[] {(byte) blue, (byte) green, (byte) red};
+        } catch (NumberFormatException e) {
+            System.err.println(e.getMessage() +
+                    "\twith hexadecimal values [0x00-0xFF]\n" +
+                    "\tdecimal values [0-255]");
+            System.err.println("Program aborted.");
+            System.exit(1);
+        }
     }
 
     public Pixel(String color) {
@@ -17,18 +30,24 @@ public class Pixel {
 
             // Decode hexadecimal values and clamp them to [0x00, 0xFF]
             int blue = Integer.decode(colors[0]);
-            blue = blue > 0xff ? 0xff : Math.max(blue, 0x00);
+            if (blue < 0 || blue > 0xff )
+                throw new NumberFormatException("Error blue : ");
 
             int green = Integer.decode(colors[1]);
-            green = green > 0xff ? 0xff : Math.max(green, 0x00);
+            if (green < 0 || green > 0xff )
+                throw new NumberFormatException("Error green : ");
 
             int red = Integer.decode(colors[2]);
-            red = red > 0xff ? 0xff : Math.max(red, 0x00);
+            if (red < 0 || red > 0xff )
+                throw new NumberFormatException("Error red: ");
 
             // Create pixel
             this.data = new byte[] {(byte) blue, (byte) green, (byte) red};
         } catch (NumberFormatException e) {
-            System.err.println("Error: color must be in format B,G,R with hexadecimal values [0x00-0xFF]");
+            System.err.println(e.getMessage() + "color must be in format B,G,R.\n" +
+                            "\twith hexadecimal values [0x00-0xFF]\n" +
+                            "\tdecimal values [0-255]");
+            System.err.println("Program aborted.");
             System.exit(1);
         } catch (Error e) {
             System.err.println(e.getMessage());
@@ -53,15 +72,24 @@ public class Pixel {
     }
 
     public void setRed(int red) {
-        this.data[2] = (byte) red;
+        if (red >= 0 && red <= 0xff)
+            this.data[2] = (byte) red;
+        else
+            System.err.println("Error: red component must be in range [0x00-0xFF], not set");
     }
 
     public void setGreen(int green) {
-        this.data[1] = (byte) green;
+        if (green >= 0 && green <= 0xff)
+            this.data[1] = (byte) green;
+        else
+            System.err.println("Error: green component must be in range [0x00-0xFF], not set");
     }
 
     public void setBlue(int blue) {
-        this.data[0] = (byte) blue;
+        if (blue >= 0 && blue <= 0xff)
+            this.data[0] = (byte) blue;
+        else
+            System.err.println("Error: blue component must be in range [0x00-0xFF], not set");
     }
 
     public void setPixel(int blue, int green, int red) {
@@ -75,6 +103,8 @@ public class Pixel {
     }
 
     public boolean equals(Pixel pixel) {
-        return pixel.getRed() == this.getRed() && pixel.getGreen() == this.getGreen() && pixel.getBlue() == this.getBlue();
+        return pixel.getRed() == this.getRed()
+                && pixel.getGreen() == this.getGreen()
+                && pixel.getBlue() == this.getBlue();
     }
 }

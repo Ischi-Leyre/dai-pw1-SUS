@@ -82,7 +82,9 @@ public class BMP {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 int index = (i * width + j) * 3;
-                pixels[i][j] = new Pixel(imageBMP[index], imageBMP[index + 1], imageBMP[index + 2]);
+                pixels[i][j] = new Pixel(imageBMP[index] & 0xff,
+                                        imageBMP[index + 1] & 0xff,
+                                          imageBMP[index + 2] & 0xff);
             }
         }
         return pixels;

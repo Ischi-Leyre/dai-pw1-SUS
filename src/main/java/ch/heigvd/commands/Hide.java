@@ -35,7 +35,7 @@ public class Hide implements Callable<Integer> {
 
   @Option(
       names = {"-l", "--left"},
-      description = "indicate the side where he see")
+      description = "indicate sus head is left, default the sus head is right")
   protected boolean left;
 
   @Option(

@@ -67,6 +67,10 @@ public class Hide implements Callable<Integer> {
         throw new IllegalArgumentException("Only BMP files are supported");
       }
 
+      if (number < 1) {
+          throw new IllegalArgumentException("Number of SUS must be greater than zero");
+      }
+
       if (!outputFileName.endsWith(".bmp")) {
         System.err.println("For output file, the wrong extension has been given by the users");
         System.err.println("Start procedure to change extension name");

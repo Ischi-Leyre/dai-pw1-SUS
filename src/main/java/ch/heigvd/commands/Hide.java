@@ -1,5 +1,7 @@
 package ch.heigvd.commands;
 
+import static ch.heigvd.ios.json.jsonTools.exportToJson;
+
 import ch.heigvd.ios.img.BMP;
 import ch.heigvd.ios.img.Pixel;
 import java.io.*;
@@ -43,6 +45,13 @@ public class Hide implements Callable<Integer> {
       defaultValue = "output.bmp")
   protected String outputFileName;
 
+  @Option(
+      names = {"-j", "--json"},
+      description = "second output, with the coordinates of each sus hidden")
+  protected boolean json;
+
+  protected String jsonFilename;
+
   @Override
   public Integer call() {
     // declaration of variables
@@ -64,6 +73,12 @@ public class Hide implements Callable<Integer> {
         outputFileName = outputFileName.split("\\.")[0] + ".bmp";
         System.err.println(
             "End procedure to change extension name, the new name is " + outputFileName);
+      }
+
+      // Check if the option
+      if (json) {
+        jsonFilename = outputFileName.split("\\.bmp")[0] + ".json";
+        System.out.println("The coordinate file has the name : " + jsonFilename);
       }
 
       if (newColor.equals(white)) {
@@ -175,6 +190,16 @@ public class Hide implements Callable<Integer> {
     src.setImageBMP(srcPixels);
     src.write(outputFileName);
     System.out.println("Output saved to " + outputFileName);
+
+    // Generate the file json
+    if (json) {
+      try {
+        exportToJson(positions, jsonFilename);
+      } catch (IOException ios) {
+        System.err.println(ios.getMessage() + "\nNo json file generated");
+      }
+      System.out.println("Coordinate saved to " + jsonFilename);
+    }
 
     return 0;
   }

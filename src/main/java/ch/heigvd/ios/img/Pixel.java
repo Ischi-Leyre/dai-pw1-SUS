@@ -58,11 +58,11 @@ public class Pixel {
     }
 
     public int getRed() {
-        return (data[2] >> 16) & 0xff;
+        return data[2] & 0xff;
     }
 
     public int getGreen() {
-        return (data[1] >> 8) & 0xff;
+        return data[1] & 0xff;
     }
 
     public int getBlue() {

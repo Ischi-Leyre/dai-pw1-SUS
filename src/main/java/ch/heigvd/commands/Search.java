@@ -49,14 +49,14 @@ public class Search implements Callable<Integer> {
     // declaration of variables
     Pixel white = new Pixel(0xff, 0xff, 0xff);
     Pixel red = new Pixel(0x00, 0x00, 0xff);
-    Pixel col = new Pixel(color);
+    Pixel newColor = new Pixel(color);
     int count = 0;
 
     // Checking users input
     try {
       if (!parent.getFilename().endsWith(".bmp"))
         throw new IllegalArgumentException("Only BMP files are supported");
-      if (col.equals(white))
+      if (newColor.equals(white))
         throw new IllegalArgumentException("SUS can not be perfect white, there is not innocence.");
     } catch (Exception e) {
       System.err.println(e.getMessage());
@@ -76,7 +76,7 @@ public class Search implements Callable<Integer> {
     Pixel[][] susPixels = sus.getPixels();
     for (int i = 0; i < susHeight; i++)
       for (int j = 0; j < susWidth; j++) {
-        susPixels[i][j] = (susPixels[i][j].equals(red)) ? col : white;
+        susPixels[i][j] = (susPixels[i][j].equals(red)) ? newColor : white;
       }
 
     // Read the target BMP file
@@ -99,10 +99,11 @@ public class Search implements Callable<Integer> {
     }
 
     // searching
-    for (int y = 0; y < srcHeight - 3; y++) {
-      for (int x = 0; x < srcWidth - 4; x++) {
+    for (int y = 0; y <= srcHeight - susHeight; y++) {
+      for (int x = 0; x <= srcWidth - susWidth; x++) {
         // launch search at coord y,x
-        boolean imposter = isImpostor(srcPixels, susPixels, susHeight, susWidth, y, x, white, col);
+        boolean imposter =
+            isImpostor(srcPixels, susPixels, susHeight, susWidth, y, x, white, newColor);
 
         // react to SUS found
         if (!imposter) {
@@ -137,8 +138,9 @@ public class Search implements Callable<Integer> {
     boolean imposter = false;
     // check for white pixel as glass of helmet of SUS
     imposter =
-        (!srcPixels[y + 3][x].equals(white) && left)
-            || (!srcPixels[y + 3][x + 3].equals(white) && !left);
+        (left && !srcPixels[y + 3][x].equals(white))
+            || (!left && !srcPixels[y + 3][x + 3].equals(white));
+
     // check for SUS
     for (int z = 0; z < susHeight && !imposter; z++) {
       for (int k = 0; k < susWidth && !imposter; k++) {
@@ -169,10 +171,5 @@ public class Search implements Callable<Integer> {
         }
       }
     }
-  }
-
-  public static void main(String[] args) {
-    int exitCode = new CommandLine(new Search()).execute(args);
-    System.exit(exitCode);
   }
 }

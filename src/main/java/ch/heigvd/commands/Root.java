@@ -1,6 +1,6 @@
 /**
  * @author : Arnaut Leyre, Marc Ischi Description : Command made with picoli that launch the others
- *     command of the project TODO : check if file is valid and uncomment Hide
+ *     command of the project
  */
 package ch.heigvd.commands;
 
@@ -10,7 +10,7 @@ import picocli.CommandLine;
     description = "A small CLI to experiment with Java IOs.",
     version = "1.0.0",
     subcommands = {
-      // Hide.class,
+      Hide.class,
       Search.class,
     },
     scope = CommandLine.ScopeType.INHERIT,

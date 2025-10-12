@@ -1,9 +1,7 @@
 /**
- @author : Arnaut Leyre, Marc Ischi
- Description : Command made with picoli that launch the others command of the project
- TODO : check if file is valid and uncomment Hide
+ * @author : Arnaut Leyre, Marc Ischi Description : Command made with picoli that launch the others
+ *     command of the project TODO : check if file is valid and uncomment Hide
  */
-
 package ch.heigvd.commands;
 
 import picocli.CommandLine;

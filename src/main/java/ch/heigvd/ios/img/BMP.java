@@ -118,5 +118,6 @@ public class BMP {
                     pixels[i][j].setPixel(newColor);
             }
         }
+        setImageBMP(pixels);
     }
 }

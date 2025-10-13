@@ -1,6 +1,6 @@
 /**
- * @author : Arnaut Leyre, Marc Ischi Description : Command made with picoli that launch the others
- *     command of the project
+ * @author : Arnaut Leyre, Marc Ischi
+ * @description : Command made with picoli that launch the others command of the project
  */
 package ch.heigvd.commands;
 

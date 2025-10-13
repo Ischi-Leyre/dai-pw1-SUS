@@ -1,6 +1,6 @@
 /**
- * @author : Arnaut Leyre, Marc Ischi Description : Command tha search for all occurence of a 4 by 5
- *     pixel pattern in a bmp image
+ * @author : Arnaut Leyre, Marc Ischi
+ * @description : Command tha search for all occurence of a 4 by 5 pixel pattern in a bmp image
  */
 package ch.heigvd.commands;
 
@@ -14,7 +14,7 @@ import picocli.CommandLine.Option;
 @Command(
     name = "search",
     mixinStandardHelpOptions = true,
-    version = "Search Demo",
+    version = "Search 1.0",
     description =
         "The program opens a BMP image and searches for occurrences of a predefined SUS motif.")
 public class Search implements Callable<Integer> {
@@ -39,7 +39,7 @@ public class Search implements Callable<Integer> {
   @CommandLine.Option(
       names = {"-l", "--left"},
       description = "indicate the side where he see")
-  protected boolean left;
+  private boolean left;
 
   @Override
   public Integer call() throws Exception {
@@ -126,7 +126,7 @@ public class Search implements Callable<Integer> {
     return 0;
   }
 
-  boolean isImpostor(
+  private boolean isImpostor(
       Pixel[][] srcPixels,
       Pixel[][] susPixels,
       int susHeight,
@@ -152,7 +152,7 @@ public class Search implements Callable<Integer> {
     return imposter;
   }
 
-  void popSUS(
+  private void popSUS(
       Pixel[][] dstPixels,
       Pixel[][] susPixels,
       int susHeight,

@@ -28,18 +28,18 @@ public class Search implements Callable<Integer> {
               + "Format: B,G,R (Blue, Green, Red) in hexadecimal separate with ',' without space.\n"
               + "Exemple for purple: 0xff,0x00,0xff",
       defaultValue = "0x00,0x00,0xff")
-  private static String color;
+  protected static String color;
 
   @Option(
       names = {"-f", "--fill"},
       description =
           "Fill a copy of the input file with all pixel not corresponding " + "to pattern in black")
-  private boolean fill = false;
+  protected boolean fill = false;
 
   @CommandLine.Option(
       names = {"-l", "--left"},
       description = "indicate the side where he see")
-  private boolean left;
+  protected boolean left;
 
   @Override
   public Integer call() throws Exception {
@@ -135,9 +135,8 @@ public class Search implements Callable<Integer> {
       int x,
       Pixel white,
       Pixel col) {
-    boolean imposter = false;
     // check for white pixel as glass of helmet of SUS
-    imposter =
+    boolean imposter =
         (left && !srcPixels[y + 3][x].equals(white))
             || (!left && !srcPixels[y + 3][x + 3].equals(white));
 

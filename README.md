@@ -187,7 +187,12 @@ java -jar target/dai-pw1-SUS-1.0-SNAPSHOT.jar IOFiles/sources/windows_background
 - **Leyre Arnaut**
 
 ## Utilisation IA
-The only help of IA was the correction of some english mistakes in this README.md file with Microsoft Copilot.
+The help of IA was the correction of some english mistakes in this README.md file with Microsoft Copilot.
+The IA was used for generation of headers of class file (author, description).
+The auto-completion of code was used for the getters of bmp header (methodes:`ByteBuffer.wrap(source, strat, lenght).order(ByteOrder.LITTLE_ENDIAN).getInt();`).
+
+## References
+- [Execptions handling in Java](https://programming.guide/java/exception-types.html)
 
 ### Acknowledgments
 

@@ -169,7 +169,7 @@ java -jar target/dai-pw1-SUS-1.0-SNAPSHOT.jar IOFiles/sources/windows_background
 #### Search
 This command has many options:
 - '-c' or '--color' to choose the color of the pattern to search (default is red). You can choose between almost 16 millions of colors with the BGR hexadecimal code (ex: '0,0,0xff' for red)
-- '-f' or '--fill' to fill a copy of the input image with all in black except the pattern found (default is no fill image), the name of the fill image is the same as the input file but with the prefix 'out'.
+- '-f' or '--fill' to fill a copy of the input image with all in white except the pattern found (default is no fill image), the name of the fill image is the same as the input file but with the suffix `_catch.bmp`
 - '-l' or '--left' to choose the pattern 'sus left' (default is 'sus right')
 
 ~~~bash

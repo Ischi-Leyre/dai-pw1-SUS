@@ -2,6 +2,7 @@
  * @author : Arnaut Leyre, Marc Ischi
  * @description : Command made with picoli that launch the others command of the project
  */
+
 package ch.heigvd.commands;
 
 import picocli.CommandLine;

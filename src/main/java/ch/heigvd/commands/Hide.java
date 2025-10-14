@@ -1,3 +1,8 @@
+/**
+ * @author : Arnaut Leyre, Marc Ischi
+ * @description : This class is used to hide one or more sus in a BMP file.
+ */
+
 package ch.heigvd.commands;
 
 import static ch.heigvd.ios.json.jsonTools.exportToJson;
@@ -10,7 +15,10 @@ import java.util.concurrent.Callable;
 import picocli.CommandLine;
 import picocli.CommandLine.Option;
 
-@CommandLine.Command(name = "hide", description = "Hide an little SUS in a BMP file.")
+@CommandLine.Command(
+    name = "hide",
+    description = "Hide an little SUS in a BMP file.",
+    version = "hide 1.0")
 public class Hide implements Callable<Integer> {
 
   @CommandLine.ParentCommand protected Root parent;

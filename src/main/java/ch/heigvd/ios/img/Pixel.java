@@ -1,3 +1,8 @@
+/**
+ * @athors : Arnaut Leyre, Marc Ischi
+ * @description : This class is used to represent a pixel in a BMP file, with 3 color components (B, G, R).
+ */
+
 package ch.heigvd.ios.img;
 
 public class Pixel {

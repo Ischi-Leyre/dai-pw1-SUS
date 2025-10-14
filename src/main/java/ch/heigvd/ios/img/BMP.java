@@ -1,3 +1,8 @@
+/**
+ * @authors : Arnaut Leyre, Marc Ischi
+ * @description : This class is used to read and write BMP files, and to manipulate the pixels of the file (get and set).
+ */
+
 package ch.heigvd.ios.img;
 
 import java.io.*;

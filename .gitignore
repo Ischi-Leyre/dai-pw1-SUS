@@ -9,10 +9,10 @@ target/
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
+!.idea/runConfigurations/*
 *.iws
 *.iml
 *.ipr
-!.idea/runConfigurations/make_jar_file_application.xml
 
 ### Eclipse ###
 .apt_generated

@@ -2,7 +2,7 @@
 ![Maven](https://img.shields.io/badge/build-Maven-blue?logo=apachemaven)
 ![Java](https://img.shields.io/badge/java-21-orange?logo=openjdk)
 <div style="text-align: center;">
-  <img src="IOFiles/sources/HEIG-VD_with_pattern.bmp" alt="HEIG-VD" width="400" />
+  <img src="IOFiles/sources/HEIG-VD_with_pattern.bmp" alt="HEIG-VD" width="330" />
 </div>
 
 ## Introduction
@@ -115,7 +115,7 @@ Just open your image with the editor, and save it with the extension bmp. After 
 Make sure to choose the option 24 bits per pixel (bpp) when you save the image.
 See the image below in red rectangle:
 <div style="text-align: center;">
-  <img src="srcImage/save_as_bmp.png" alt="save as bmp" width="400" />
+  <img src="srcImage/save_as_bmp.png" alt="save as bmp" width="410" />
 </div>
 
 ##### For Linux / MacOS users:

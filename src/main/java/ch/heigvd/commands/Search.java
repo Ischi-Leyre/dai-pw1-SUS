@@ -28,18 +28,18 @@ public class Search implements Callable<Integer> {
               + "Format: B,G,R (Blue, Green, Red) in hexadecimal separate with ',' without space.\n"
               + "Exemple for purple: 0xff,0x00,0xff",
       defaultValue = "0x00,0x00,0xff")
-  private static String color;
+  protected static String color;
 
   @Option(
       names = {"-f", "--fill"},
       description =
-          "Fill a copy of the input file with all pixel not corresponding " + "to pattern in black")
-  private boolean fill = false;
+          "Fill a copy of the input file with all pixel not corresponding " + "to pattern in white")
+  protected boolean fill = false;
 
   @CommandLine.Option(
       names = {"-l", "--left"},
       description = "indicate the side where he see")
-  private boolean left;
+  protected boolean left;
 
   @Override
   public Integer call() throws Exception {
@@ -54,10 +54,12 @@ public class Search implements Callable<Integer> {
 
     // Checking users input
     try {
-      if (!parent.getFilename().endsWith(".bmp"))
+      if (!parent.getFilename().endsWith(".bmp")) {
         throw new IllegalArgumentException("Only BMP files are supported");
-      if (newColor.equals(white))
+      }
+      if (newColor.equals(white)) {
         throw new IllegalArgumentException("SUS can not be perfect white, there is not innocence.");
+      }
     } catch (Exception e) {
       System.err.println(e.getMessage());
       System.exit(1);
@@ -65,8 +67,11 @@ public class Search implements Callable<Integer> {
 
     // Select the sus motif
     BMP sus = new BMP();
-    if (left) sus.read("sus_left.bmp");
-    else sus.read("sus_right.bmp");
+    if (left) {
+      sus.read("sus_left.bmp");
+    } else {
+      sus.read("sus_right.bmp");
+    }
 
     // Get dimensions of sus
     int susWidth = sus.getWidth();
@@ -94,8 +99,11 @@ public class Search implements Callable<Integer> {
     dst.read(parent.getFilename());
     dstPixels = dst.getPixels();
     if (fill) {
-      for (int y = 0; y < srcHeight; y++)
-        for (int x = 0; x < srcWidth; x++) dstPixels[y][x].setPixel(white);
+      for (int y = 0; y < srcHeight; y++) {
+        for (int x = 0; x < srcWidth; x++) {
+          dstPixels[y][x].setPixel(white);
+        }
+      }
     }
 
     // searching
@@ -117,7 +125,9 @@ public class Search implements Callable<Integer> {
 
     // Save the modified image
     if (fill) {
-      String outputFileName = "out" + parent.getFilename();
+      String filename_no_ext =
+          parent.getFilename().substring(0, parent.getFilename().lastIndexOf('.'));
+      String outputFileName = filename_no_ext + "_catch.bmp";
       dst.setImageBMP(dstPixels);
       dst.write(outputFileName);
       System.out.println("Output saved to " + outputFileName);
@@ -134,10 +144,9 @@ public class Search implements Callable<Integer> {
       int y,
       int x,
       Pixel white,
-      Pixel col) {
-    boolean imposter = false;
+      Pixel newColor) {
     // check for white pixel as glass of helmet of SUS
-    imposter =
+    boolean imposter =
         (left && !srcPixels[y + 3][x].equals(white))
             || (!left && !srcPixels[y + 3][x + 3].equals(white));
 
@@ -145,8 +154,8 @@ public class Search implements Callable<Integer> {
     for (int z = 0; z < susHeight && !imposter; z++) {
       for (int k = 0; k < susWidth && !imposter; k++) {
         imposter =
-            !(((susPixels[z][k].equals(white) && !srcPixels[y + z][x + k].equals(col))
-                || (susPixels[z][k].equals(col) && srcPixels[y + z][x + k].equals(col))));
+            !(((susPixels[z][k].equals(white) && !srcPixels[y + z][x + k].equals(newColor))
+                || (susPixels[z][k].equals(newColor) && srcPixels[y + z][x + k].equals(newColor))));
       }
     }
     return imposter;

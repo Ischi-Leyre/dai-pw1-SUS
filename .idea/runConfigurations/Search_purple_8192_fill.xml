@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Search purple 8192 fill" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="ch.heigvd.Main" />
+    <module name="dai-pw1-SUS" />
+    <option name="PROGRAM_PARAMETERS" value="IOFiles/outputs/SUS_n_8192_purple.bmp search -c=0xff,0,0xff -f" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

@@ -13,7 +13,9 @@ description: Practical Work 1 for the DAI course at HEIG-VD, Switzerland
 [Link to the reposoty](https://github.com/Ischi-Leyre/dai-pw1-SUS)
  
 <small>M. Ischi and A.Leyre.</small>
- 
+
+![w:210 h:150](/srcImage/sus_file.jpg)
+
 ---
 <!-- _class: invert -->
 # Objectives

@@ -14,24 +14,28 @@ public class BMP {
         BufferedInputStream bis = new BufferedInputStream(fis)) {
       header = new byte[54];
 
-      if (bis.read(header) != 54)
+      if (bis.read(header) != 54) {
         throw new IOException("Fichier trop petit pour être un BMP valide.");
+      }
 
-      if (getBitsPerPixel() != 24)
+      if (getBitsPerPixel() != 24) {
         throw new IOException("Le fichier n'est pas un BMP 24 bits valide.");
+      }
 
       int width = getWidth();
       int height = getHeight();
-      if (height < 5 || width < 4)
+      if (height < 5 || width < 4) {
         throw new IOException("Dimension invalide : " + width + " x " + height);
+      }
 
       int dataOffset = getOffset();
 
       imageBMP = new byte[width * height * 3];
       bis.skip(dataOffset - header.length);
 
-      if (bis.read(imageBMP) != imageBMP.length)
+      if (bis.read(imageBMP) != imageBMP.length) {
         throw new IOException("Impossible de lire les données d'image.");
+      }
 
     } catch (Exception e) {
       System.err.println("Error read: " + e.getMessage());
@@ -42,7 +46,9 @@ public class BMP {
     try (OutputStream fos = new FileOutputStream(filename);
         BufferedOutputStream bos = new BufferedOutputStream(fos)) {
       bos.write(header);
-      if (getOffset() > header.length) bos.write(new byte[getOffset() - header.length]);
+      if (getOffset() > header.length) {
+        bos.write(new byte[getOffset() - header.length]);
+      }
 
       bos.write(imageBMP);
     } catch (Exception e) {
@@ -113,7 +119,9 @@ public class BMP {
     Pixel[][] pixels = getPixels();
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        if (pixels[i][j].equals(targetColor)) pixels[i][j].setPixel(newColor);
+        if (pixels[i][j].equals(targetColor)) {
+          pixels[i][j].setPixel(newColor);
+        }
       }
     }
     setImageBMP(pixels);

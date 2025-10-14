@@ -182,6 +182,14 @@ An example to search the pattern 'sus right' in blue color in the image 'windows
 java -jar target/dai-pw1-SUS-1.0-SNAPSHOT.jar IOFiles/sources/windows_background_with_pattern.bmp search -c=0xff,0,0 -f
 ~~~
 
+>[!Note]
+> 
+> For the search command, the pattern must be in the same color as the one used to hide it, but if the pixel not in the pattern are the same color, this command can not find them. <br>
+> Exemple:<br>
+>![Sus Vanishing](srcImage/sus_or_no_sus_that_is_the_question.bmp)
+> 
+> In this image, we can not find the pattern 'sus right' in red color because the red color is also used in the image.
+
 ## Authors
 - **Ischi Marc**
 - **Leyre Arnaut**

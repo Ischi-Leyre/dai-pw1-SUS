@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Hide 8192 purple sus In Sus" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="ch.heigvd.Main" />
+    <module name="dai-pw1-SUS" />
+    <option name="PROGRAM_PARAMETERS" value="IOFiles/sources/SUS.bmp hide -c=0xff,0,0xff -n=8192 -o=IOFiles/outputs/SUS_n_8192_purple.bmp -j" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

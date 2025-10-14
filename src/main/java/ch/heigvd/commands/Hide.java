@@ -64,43 +64,12 @@ public class Hide implements Callable<Integer> {
   public Integer call() {
     // declaration of variables
     Pixel red = new Pixel(0x0, 0x0, 0xff);
-    Pixel white = new Pixel(0xff, 0xff, 0xff);
 
     // Convert the color string to a Color object
     Pixel newColor = new Pixel(color);
 
-    // Checking users input
-    try {
-      if (!parent.getFilename().endsWith(".bmp")) {
-        throw new IllegalArgumentException("Only BMP files are supported");
-      }
-
-      if (number < 1) {
-          throw new IllegalArgumentException("Number of SUS must be greater than zero");
-      }
-
-      if (!outputFileName.endsWith(".bmp")) {
-        System.err.println("For output file, the wrong extension has been given by the users");
-        System.err.println("Start procedure to change extension name");
-        outputFileName = outputFileName.split("\\.")[0] + ".bmp";
-        System.err.println(
-            "End procedure to change extension name, the new name is " + outputFileName);
-      }
-
-      // Check if the option
-      if (json) {
-        jsonFilename = outputFileName.split("\\.bmp")[0] + ".json";
-        System.out.println("The coordinate file has the name : " + jsonFilename);
-      }
-
-      if (newColor.equals(white)) {
-        System.err.println("The white color is not permitted for the body of sus, aborting...");
-        System.exit(1);
-      }
-    } catch (Exception e) {
-      System.err.println(e.getMessage());
-      System.exit(1);
-    }
+    // Check user input
+    checkUserInput(newColor);
 
     // Message to user
     System.out.println("Hiding " + number + " SUS in " + parent.getFilename());
@@ -119,39 +88,83 @@ public class Hide implements Callable<Integer> {
       sus.changeColor(red, newColor);
     }
 
-    // Control head of SUS must be white
-    Pixel[][] susPixels = sus.getPixels();
-    if (left) {
-      if (!susPixels[3][0].equals(white)) susPixels[3][0].setPixel(white);
-    } else {
-      if (!susPixels[3][3].equals(white)) susPixels[3][3].setPixel(white);
-    }
-
     // Read the target BMP file
     BMP src = new BMP();
     src.read(parent.getFilename());
 
-    // Calculate the coordonates for each SUS to hide
-    // Get dimensions of source and sus
-    int susWidth = sus.getWidth();
-    int susHeight = sus.getHeight();
-    int srcWidth = src.getWidth();
-    int srcHeight = src.getHeight();
+    // Check if the number of SUS to hide is possible
+    checkMaxNumber(src, sus);
 
+    // Calculate the positions to hide the SUS
+    int[][] positions = generatePositions(src, sus);
+
+    // Hiding sus in the image
+    Pixel[][] srcPixels = hideSUS(src, sus, positions);
+
+    // Save the modified image
+    saveOutput(src, srcPixels, positions);
+
+    return 0;
+  }
+
+  private void checkUserInput(Pixel newColor) {
+    Pixel white = new Pixel(0xff, 0xff, 0xff);
+
+    // Checking users input
+    try {
+      if (!parent.getFilename().endsWith(".bmp")) {
+        throw new IllegalArgumentException("Only BMP files are supported");
+      }
+
+      if (number < 1) {
+        throw new IllegalArgumentException("Number of SUS must be greater than zero");
+      }
+
+      if (newColor.equals(white)) {
+        throw new IllegalArgumentException("SUS can not be perfect white, there is not innocence.");
+      }
+
+      if (!outputFileName.endsWith(".bmp")) {
+        System.err.println("For output file, the wrong extension has been given by the users");
+        System.err.println("Start procedure to change extension name");
+        outputFileName = outputFileName.split("\\.")[0] + ".bmp";
+        System.err.println(
+            "End procedure to change extension name, the new name is " + outputFileName);
+      }
+
+      // Check if the option
+      if (json) {
+        jsonFilename = outputFileName.split("\\.bmp")[0] + ".json";
+        System.out.println("The coordinate file has the name : " + jsonFilename);
+      }
+
+    } catch (Exception e) {
+      System.err.println(e.getMessage());
+      System.exit(1);
+    }
+  }
+
+  private void checkMaxNumber(BMP src, BMP sus) {
     // Calculate the max number of SUS that can fit in the source image
-    int maxCountWidth = srcWidth / susWidth;
-    int maxCountHeight = srcHeight / susHeight;
+    int maxCountWidth = src.getWidth() / sus.getWidth();
+    int maxCountHeight = src.getHeight() / sus.getHeight();
     int maxCount =
         (int)
             (maxCountWidth * maxCountHeight / 1.5); // divide by 1,5 for enough place for no overlap
 
     if (number > maxCount) {
-      System.err.println("Error: cannot hide " + number + " SUS in the image, max is " + maxCount);
-      return 1;
+      throw new IllegalArgumentException(
+          "Error: cannot hide " + number + " SUS in the image, max is " + maxCount);
     }
+  }
 
-    // Calculate the positions to hide the SUS
-    int[][] positions = new int[number][2];
+  private int[][] generatePositions(BMP src, BMP sus) {
+    int[][] coordinates = new int[number][2];
+
+    int susWidth = sus.getWidth();
+    int susHeight = sus.getHeight();
+    int srcWidth = src.getWidth();
+    int srcHeight = src.getHeight();
 
     // Start random position generator
     Random rand = new Random();
@@ -162,8 +175,8 @@ public class Hide implements Callable<Integer> {
 
       // Check for overlap with previous positions
       for (int j = 0; j < i; j++) {
-        int prevX = positions[j][0];
-        int prevY = positions[j][1];
+        int prevX = coordinates[j][0];
+        int prevY = coordinates[j][1];
         if (Math.abs(x - prevX) < susWidth && Math.abs(y - prevY) < susHeight) {
           // Overlap detected, generate a new position
           x = rand.nextInt(0, srcWidth - susWidth);
@@ -173,12 +186,22 @@ public class Hide implements Callable<Integer> {
       }
 
       // Save the position
-      positions[i][0] = x;
-      positions[i][1] = y;
+      coordinates[i][0] = x;
+      coordinates[i][1] = y;
     }
+    return coordinates;
+  }
 
+  private Pixel[][] hideSUS(BMP src, BMP sus, int[][] positions) {
     // Get the pixels of the source image
     Pixel[][] srcPixels = src.getPixels();
+
+    // Get the pixels of the sus image
+    Pixel[][] susPixels = sus.getPixels();
+
+    // Get dimensions of sus
+    int susWidth = sus.getWidth();
+    int susHeight = sus.getHeight();
 
     // Hide the SUS in the source image at the calculated positions
     for (int i = 0; i < number; i++) {
@@ -191,14 +214,17 @@ public class Hide implements Callable<Integer> {
           Pixel susPixel = susPixels[y][x];
 
           // Only hide non-white pixels exept the eye pixel
-          if (!susPixel.equals(white) || (y == 3 && ((left && x == 0) || (!left && x == 3)))) {
+          if (!susPixel.equals(new Pixel(0xff, 0xff, 0xff))
+              || (y == 3 && ((left && x == 0) || (!left && x == 3)))) {
             srcPixels[posY + y][posX + x].setPixel(susPixel);
           }
         }
       }
     }
+    return srcPixels;
+  }
 
-    // Save the modified image
+  private void saveOutput(BMP src, Pixel[][] srcPixels, int[][] positions) {
     src.setImageBMP(srcPixels);
     src.write(outputFileName);
     System.out.println("Output saved to " + outputFileName);
@@ -212,7 +238,5 @@ public class Hide implements Callable<Integer> {
       }
       System.out.println("Coordinate saved to " + jsonFilename);
     }
-
-    return 0;
   }
 }

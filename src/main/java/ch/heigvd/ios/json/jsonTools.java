@@ -22,6 +22,7 @@ public class jsonTools {
     StringBuilder json = new StringBuilder();
     json.append("{\n");
 
+    // Creation of the json content
     for (int i = 0; i < coordinate.length; ++i) {
       String key = (i + 1) + (i == 0 ? "st" : i == 1 ? "nd" : i == 2 ? "rd" : "th") + " sus : ";
       json.append("\t\"")
@@ -38,6 +39,7 @@ public class jsonTools {
     }
     json.append("}");
 
+    // Write the json content to the file
     try (BufferedOutputStream bosJson =
         new BufferedOutputStream(new FileOutputStream(jsonFilename))) {
       bosJson.write(json.toString().getBytes());

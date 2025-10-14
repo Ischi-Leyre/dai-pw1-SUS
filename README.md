@@ -192,6 +192,7 @@ The IA was used for generation of headers of class file (author, description).
 The auto-completion of code was used for the getters of bmp header (methodes:`ByteBuffer.wrap(source, strat, lenght).order(ByteOrder.LITTLE_ENDIAN).getInt();`).
 
 ## References
+- [PiccoCLI](https://picocli.info/)
 - [Execptions handling in Java](https://programming.guide/java/exception-types.html)
 
 ### Acknowledgments

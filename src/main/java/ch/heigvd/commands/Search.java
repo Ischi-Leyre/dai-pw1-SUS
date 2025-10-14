@@ -33,7 +33,7 @@ public class Search implements Callable<Integer> {
   @Option(
       names = {"-f", "--fill"},
       description =
-          "Fill a copy of the input file with all pixel not corresponding " + "to pattern in black")
+          "Fill a copy of the input file with all pixel not corresponding " + "to pattern in white")
   protected boolean fill = false;
 
   @CommandLine.Option(

@@ -2,6 +2,7 @@
  * @author : Arnaut Leyre, Marc Ischi
  * @description : Command tha search for all occurence of a 4 by 5 pixel pattern in a bmp image
  */
+
 package ch.heigvd.commands;
 
 import ch.heigvd.ios.img.BMP;

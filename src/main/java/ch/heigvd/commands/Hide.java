@@ -1,3 +1,8 @@
+/**
+ * @author : Arnaut Leyre, Marc Ischi
+ * @description : This class is used to hide one or more sus in a BMP file.
+ */
+
 package ch.heigvd.commands;
 
 import static ch.heigvd.ios.json.jsonTools.exportToJson;

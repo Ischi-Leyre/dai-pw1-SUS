@@ -4,8 +4,8 @@ theme: uncover
 size: 16:9
 paginate: true
 author: M.Ischi and A.Leyre
-title: DAI - Praticale Work 1
-description: Praticale Work 1 for the DAI course at HEIG-VD, Switzerland
+title: DAI - Practical Work 1
+description: Practical Work 1 for the DAI course at HEIG-VD, Switzerland
 ---
 <!-- _class: invert -->
 ## DAI - Praticale Work 1
@@ -19,8 +19,8 @@ description: Praticale Work 1 for the DAI course at HEIG-VD, Switzerland
 # Objectives
 
 - Make a programme using piccoCLI interface
-- The programme must have two fonctionnalities
-- Using the additionnal parameter and option
+- The programme must have two functionalities
+- Using the additional parameters and options
 
 ---
  <!-- _class: invert -->
@@ -35,8 +35,8 @@ It can hide and search a specific pattern in a bmp file
   <!-- _class: invert -->
 # Our Fonctionnalities
 
-- Hide :  hide one or more pattern in a bmp image
-- Search : search and count each occurrency of a pattern in a bmp image
+- Hide:  hide one or more patterns in a bmp image
+- Search: search and count each occurrence of a pattern in a bmp image
 
 ---
   <!-- _class: invert -->
@@ -77,15 +77,15 @@ It can hide and search a specific pattern in a bmp file
 # Improvement
 
 
-- For two commands :
- -> give the choice of pattern to user
- -> resolve the matching background unfindable effect 
+- For two commands:
+ -> give the choice of pattern to the user
+ -> resolve the matching background unfindable effect
  
 - For hide :
 -> read a json with coordinates where to hide
  
 - For search :
--> write a json with all cordinates of pattern found
+-> write a json with all coordinates of pattern found
 ->  give the choice of color to fill, or apply a mask
 
 
@@ -94,4 +94,4 @@ It can hide and search a specific pattern in a bmp file
 # Sources
  - my PiccoCLI : https://picocli.info/
  - Peers
- - Microsoft Copilot : ortograph and commenting
+ - Microsoft Copilot: orthograph and commenting
